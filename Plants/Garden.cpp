@@ -5,7 +5,6 @@
 Tree *InTree(ifstream &file)
 {
 	Tree *tree = new Tree;
-	file >> tree->name;
 	file >> tree->age;
 	return tree;
 }
@@ -24,7 +23,6 @@ Shrub *InShrub(ifstream &file)
 {
 	Shrub *shrub = new Shrub;
 	int tmp;
-	file >> shrub->name;
 	file >> tmp;
 	shrub->month = (G_month)(tmp - 1);
 	return shrub;
@@ -35,46 +33,6 @@ void OutShrub(Plant *plant, ofstream &file)
 	file << "Месяц цветения: ";
 	string months[] = {"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
 	file << months[((Shrub*)plant)->month] << "." << endl;
-	/*
-	switch (((Shrub *)plant)->month)
-	{
-	case JANUARY:
-		file << "Январь" << endl;
-		break;
-	case FEBRUARY:
-		file << "Февраль" << endl;
-		break;
-	case MARCH:
-		file << "Март" << endl;
-		break;
-	case APRIL:
-		file << "Апрель" << endl;
-		break;
-	case MAY:
-		file << "Май" << endl;
-		break;
-	case JUNE:
-		file << "Июнь" << endl;
-		break;
-	case JULY:
-		file << "Июль" << endl;
-		break;
-	case AUGUST:
-		file << "Август" << endl;
-		break;
-	case SEPTEMBER:
-		file << "Сентябрь" << endl;
-		break;
-	case OCTOBER:
-		file << "Октябрь" << endl;
-		break;
-	case NOVEMBER:
-		file << "Ноябрь" << endl;
-		break;
-	case DECEMBER:
-		file << "Декабрь" << endl;
-		break;
-	}*/
 }
 
 void ClearShrub(Plant *plant)
@@ -86,7 +44,10 @@ Plant *InPlant(ifstream &file)
 {
 	Plant *plant = new Plant;
 	int type;
+	string name;
+
 	file >> type;
+	file >> name;
 	switch (type)
 	{
 	case 1:
@@ -103,6 +64,7 @@ Plant *InPlant(ifstream &file)
 		cout << "Ошибка: некоректно введены данные в файл";
 		exit(0);
 	}
+	plant->name = name;
 	return plant;
 }
 
