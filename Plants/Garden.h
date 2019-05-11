@@ -69,10 +69,12 @@ void ClearShrub(Plant *);
 
 Plant *InPlant(ifstream &);
 void OutPlant(Plant *, ofstream &);
+void OutFiltered(Plant *, ofstream &);
 void ClearPlant(Plant *);
 
 Node *InNode(ifstream &);
 void OutNode(Node *, ofstream &);
+void OutFiltered(Node *, ofstream &);
 void ClearNode(Node *);
 
 void InitContainer(Container *);

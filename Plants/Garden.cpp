@@ -71,16 +71,28 @@ Plant *InPlant(ifstream &file)
 void OutPlant(Plant *plant, ofstream &file)
 {
 	string type[] = {"дерево","куст"};
-	//file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
+	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
+	switch (plant->key)
+	{
+	case TREE:
+		OutTree(plant,file);
+		break;
+	case SHRUB:
+		OutShrub(plant, file);
+		break;
+	}
+
+}
+
+void OutFiltered(Plant *plant, ofstream &file)
+{
+	string type[] = { "дерево","куст" };
 	switch (plant->key)
 	{
 	case TREE:
 		file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
-		OutTree(plant,file);
+		OutTree(plant, file);
 		break;
-	//case SHRUB:
-	//	OutShrub(plant, file);
-	//	break;
 	}
 
 }
@@ -112,6 +124,11 @@ Node *InNode(ifstream &file)
 void OutNode(Node *node, ofstream &file)
 {
 	OutPlant(node->cur, file);
+}
+
+void OutFiltered(Node *node, ofstream &file)
+{
+	OutFiltered(node->cur, file);
 }
 
 void ClearNode(Node *node)
@@ -162,9 +179,9 @@ void OutContainer(Container *container, ofstream &file)
 	Node *node;
 	file << "Количество хранящихся элементов: " << container->amount << endl;
 	node = container->first;
-	for (int i = 0; i<container->amount; i++)
+	for (int i = 0; i < container->amount; i++)
 	{
-		OutNode(node,file);
+		OutFiltered(node, file);
 		node = node->next;
 	}
 }
