@@ -71,15 +71,16 @@ Plant *InPlant(ifstream &file)
 void OutPlant(Plant *plant, ofstream &file)
 {
 	string type[] = {"дерево","куст"};
-	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
+	//file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
 	switch (plant->key)
 	{
 	case TREE:
+		file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
 		OutTree(plant,file);
 		break;
-	case SHRUB:
-		OutShrub(plant, file);
-		break;
+	//case SHRUB:
+	//	OutShrub(plant, file);
+	//	break;
 	}
 
 }
