@@ -44,6 +44,7 @@ struct Shrub {
 struct Plant {
 	Type key;
 	string name;
+	int consonant;
 };
 
 struct Node {
@@ -69,6 +70,7 @@ void ClearShrub(Plant *);
 
 Plant *InPlant(ifstream &);
 void OutPlant(Plant *, ofstream &);
+int ConsonantCount(string &);
 void ClearPlant(Plant *);
 
 Node *InNode(ifstream &);
