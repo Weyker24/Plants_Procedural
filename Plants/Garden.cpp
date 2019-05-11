@@ -44,10 +44,12 @@ Plant *InPlant(ifstream &file)
 {
 	Plant *plant = new Plant;
 	int type;
+	int tmp_i;
 	string name;
 
 	file >> type;
 	file >> name;
+	file >> tmp_i;
 	switch (type)
 	{
 	case 1:
@@ -65,13 +67,16 @@ Plant *InPlant(ifstream &file)
 		exit(0);
 	}
 	plant->name = name;
+	plant->habitat = (G_habitat)(tmp_i - 1);
 	return plant;
 }
 
 void OutPlant(Plant *plant, ofstream &file)
 {
 	string type[] = {"дерево","куст"};
+	string habitat_a[] = { "Тундра", "Пустыня", "Степь", "Сибирь" };
 	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
+	file << "Место обитания: " << habitat_a[plant->habitat] << ". ";
 	switch (plant->key)
 	{
 	case TREE:

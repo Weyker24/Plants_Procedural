@@ -29,6 +29,14 @@ enum G_month
 	DECEMBER
 };
 
+enum G_habitat
+{
+	TUNDRA,
+	DESERT,
+	STEPPE,
+	SIBERIA
+};
+
 struct Tree {
 	Type key;
 	string name;
@@ -44,6 +52,7 @@ struct Shrub {
 struct Plant {
 	Type key;
 	string name;
+	G_habitat habitat;
 };
 
 struct Node {
