@@ -11,7 +11,7 @@ Tree *InTree(ifstream &file)
 
 void OutTree(Plant *plant, ofstream &file)
 {
-	file << "Возраст: " << ((Tree *)plant)->age << "." << endl;	
+	file << "Возраст: " << ((Tree *)plant)->age << "." << endl;
 }
 
 void ClearTree(Plant *plant)
@@ -31,7 +31,7 @@ Shrub *InShrub(ifstream &file)
 void OutShrub(Plant *plant, ofstream &file)
 {
 	file << "Месяц цветения: ";
-	string months[] = {"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
+	string months[] = { "Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь" };
 	file << months[((Shrub*)plant)->month] << "." << endl;
 }
 
@@ -40,12 +40,26 @@ void ClearShrub(Plant *plant)
 	delete((Shrub *)plant);
 }
 
+Flower *InFlower(ifstream &file)
+{
+	Flower *flower = new Flower;
+	int tmp;
+	file >> tmp;
+	flower->type = (G_type)(tmp - 1);
+	return flower;
+}
+
+void OutFlower(Plant *plant, ofstream &file)
+{
+	string types[] = { "Домашние", "Садовые", "Дикие" };
+	file << "Тип растения: " << types[((Flower*)plant)->type] << "." << endl;
+}
+
 Plant *InPlant(ifstream &file)
 {
 	Plant *plant = new Plant;
 	int type;
 	string name;
-
 	file >> type;
 	file >> name;
 	switch (type)
@@ -60,6 +74,11 @@ Plant *InPlant(ifstream &file)
 		plant = (Plant*)InShrub(file);
 		plant->key = SHRUB;
 		break;
+	case 3:
+		//ввод цветка
+		plant = (Plant*)InFlower(file);
+		plant->key = FLOWER;
+		break;
 	default:
 		cout << "Ошибка: некоректно введены данные в файл";
 		exit(0);
@@ -68,17 +87,22 @@ Plant *InPlant(ifstream &file)
 	return plant;
 }
 
+//Функция вывода объекта. Сначало опредиляется тип объекта, а потом вызывается соответствующая функция.
+//Необходимо обновить список типов, а также их проверку при добавлении нового объекта.
 void OutPlant(Plant *plant, ofstream &file)
 {
-	string type[] = {"дерево","куст"};
+	string type[] = { "дерево","куст","цветок" };
 	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
 	switch (plant->key)
 	{
 	case TREE:
-		OutTree(plant,file);
+		OutTree(plant, file);
 		break;
 	case SHRUB:
 		OutShrub(plant, file);
+		break;
+	case FLOWER:
+		OutFlower(plant, file);
 		break;
 	}
 
@@ -161,9 +185,9 @@ void OutContainer(Container *container, ofstream &file)
 	Node *node;
 	file << "Количество хранящихся элементов: " << container->amount << endl;
 	node = container->first;
-	for (int i = 0; i<container->amount; i++)
+	for (int i = 0; i < container->amount; i++)
 	{
-		OutNode(node,file);
+		OutNode(node, file);
 		node = node->next;
 	}
 }

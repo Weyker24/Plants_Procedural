@@ -8,11 +8,15 @@
 
 using namespace std;
 
+//Список объектов в программе (в файле для ввода: порядковый номер в списке минус 1)
+//Обновить при добавлении нового объекта
 enum Type {
 	TREE,
-	SHRUB
+	SHRUB,
+	FLOWER
 };
 
+//Список месяцов года (в файле для ввода: порядковый номер в списке минус 1)
 enum G_month
 {
 	JANUARY,
@@ -29,6 +33,15 @@ enum G_month
 	DECEMBER
 };
 
+//Список типов растений в программе (в файле для ввода: порядковый номер в списке минус 1)
+//Обновить при добавлении нового типа
+enum G_type
+{
+	HOME,
+	GARDEN,
+	WILD
+};
+
 struct Tree {
 	Type key;
 	string name;
@@ -39,6 +52,12 @@ struct Shrub {
 	Type key;
 	string name;
 	G_month month;
+};
+
+struct Flower {
+	Type key;
+	string name;
+	G_type type;
 };
 
 struct Plant {
@@ -76,6 +95,6 @@ void OutNode(Node *, ofstream &);
 void ClearNode(Node *);
 
 void InitContainer(Container *);
-void InContainer(Container *,ifstream &);
+void InContainer(Container *, ifstream &);
 void OutContainer(Container *, ofstream &);
 void ClearContainer(Container *);
