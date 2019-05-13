@@ -112,3 +112,7 @@ void InitContainer(Container *);
 void InContainer(Container *, ifstream &);
 void OutContainer(Container *, ofstream &);
 void ClearContainer(Container *);
+void Sort(Node *&, Node *&);
+void Pop(Node *);
+void Push(Node *, Node *, Node *);
+void Swap(Node *, Node *);
