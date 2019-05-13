@@ -86,7 +86,7 @@ Shrub *InShrub(ifstream &);
 void OutShrub(Plant *, ofstream &);
 void ClearShrub(Plant *);
 
-Shrub *InFlower(ifstream &);
+Flower *InFlower(ifstream &);
 void OutFlower (Plant *, ofstream &);
 
 Plant *InPlant(ifstream &);
