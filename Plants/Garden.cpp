@@ -59,9 +59,11 @@ Plant *InPlant(ifstream &file)
 {
 	Plant *plant = new Plant;
 	int type;
+	int tmp_i;
 	string name;
 	file >> type;
 	file >> name;
+	file >> tmp_i;
 	switch (type)
 	{
 	case 1:
@@ -84,6 +86,7 @@ Plant *InPlant(ifstream &file)
 		exit(0);
 	}
 	plant->name = name;
+	plant->habitat = (G_habitat)(tmp_i - 1);
 	return plant;
 }
 
@@ -91,8 +94,10 @@ Plant *InPlant(ifstream &file)
 //Необходимо обновить список типов, а также их проверку при добавлении нового объекта.
 void OutPlant(Plant *plant, ofstream &file)
 {
+	string habitat_a[] = { "Тундра", "Пустыня", "Степь", "Сибирь" };
 	string type[] = { "дерево","куст","цветок" };
 	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
+	file << "Место обитания: " << habitat_a[plant->habitat] << ". ";
 	switch (plant->key)
 	{
 	case TREE:

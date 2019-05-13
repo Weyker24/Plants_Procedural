@@ -33,6 +33,14 @@ enum G_month
 	DECEMBER
 };
 
+enum G_habitat
+{
+	TUNDRA,
+	DESERT,
+	STEPPE,
+	SIBERIA
+};
+
 //Список типов растений в программе (в файле для ввода: порядковый номер в списке минус 1)
 //Обновить при добавлении нового типа
 enum G_type
@@ -63,6 +71,7 @@ struct Flower {
 struct Plant {
 	Type key;
 	string name;
+	G_habitat habitat;
 };
 
 struct Node {
