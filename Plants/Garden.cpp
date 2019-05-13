@@ -11,7 +11,7 @@ Tree *InTree(ifstream &file)
 
 void OutTree(Plant *plant, ofstream &file)
 {
-	file << "Возраст: " << ((Tree *)plant)->age << "." << endl;
+	file << "Возраст: " << ((Tree *)plant)->age << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
 }
 
 void ClearTree(Plant *plant)
@@ -31,8 +31,8 @@ Shrub *InShrub(ifstream &file)
 void OutShrub(Plant *plant, ofstream &file)
 {
 	file << "Месяц цветения: ";
-	string months[] = { "Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь" };
-	file << months[((Shrub*)plant)->month] << "." << endl;
+	string months[] = {"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
+	file << months[((Shrub*)plant)->month] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
 }
 
 void ClearShrub(Plant *plant)
@@ -52,7 +52,7 @@ Flower *InFlower(ifstream &file)
 void OutFlower(Plant *plant, ofstream &file)
 {
 	string types[] = { "Домашние", "Садовые", "Дикие" };
-	file << "Тип растения: " << types[((Flower*)plant)->type] << "." << endl;
+	file << "Тип растения: " << types[((Flower*)plant)->type] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
 }
 
 Plant *InPlant(ifstream &file)
@@ -87,6 +87,7 @@ Plant *InPlant(ifstream &file)
 	}
 	plant->name = name;
 	plant->habitat = (G_habitat)(tmp_i - 1);
+	plant->consonant = ConsonantCount(name);
 	return plant;
 }
 
@@ -111,6 +112,21 @@ void OutPlant(Plant *plant, ofstream &file)
 		break;
 	}
 
+}
+
+int ConsonantCount(string &name)
+{
+	int consonant = 0;
+	string alphabet_consonant("БВГДЖЗКЛМНПРСТФХЦЧШЩбвгджзклмнпрстфхцчшщ");
+	for (unsigned int i = 0; i < name.length(); i++)
+	{
+		if (alphabet_consonant.find(name[i]) != string::npos)
+		{
+			consonant++;
+		}
+	}
+	cout << endl;
+	return consonant;
 }
 
 void ClearPlant(Plant *plant)

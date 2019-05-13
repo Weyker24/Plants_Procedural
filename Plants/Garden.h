@@ -72,6 +72,7 @@ struct Plant {
 	Type key;
 	string name;
 	G_habitat habitat;
+	int consonant;
 };
 
 struct Node {
@@ -100,6 +101,7 @@ void OutFlower (Plant *, ofstream &);
 
 Plant *InPlant(ifstream &);
 void OutPlant(Plant *, ofstream &);
+int ConsonantCount(string &);
 void ClearPlant(Plant *);
 
 Node *InNode(ifstream &);
