@@ -52,5 +52,4 @@ int main(int argc, char* argv[])
 
 	file_i.close();
 	file_o.close();
-
 }

@@ -2,10 +2,28 @@
 #include "pch.h"
 #include "garden.h"
 
+bool is_number(const std::string& s)
+{
+	std::string::const_iterator it = s.begin();
+	while (it != s.end() && isdigit(*it)) ++it;
+	return !s.empty() && it == s.end();
+}
+
+bool is_empty_file(std::ifstream& pFile)
+{
+	return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
 Tree *InTree(ifstream &file)
 {
 	Tree *tree = new Tree;
-	file >> tree->age;
+	string tmp;
+	getline(file, tmp);
+	if (tmp.empty()) { tree->age = -1;  return tree; }
+	if (!is_number(tmp)) { tree->age = -2; return tree; }
+	else { tree->age = stoi(tmp); }
+	if (tree->age < 0 || tree->age > 3000) { tree->age = -2; return tree; }
+
 	return tree;
 }
 
@@ -22,9 +40,12 @@ void ClearTree(Plant *plant)
 Shrub *InShrub(ifstream &file)
 {
 	Shrub *shrub = new Shrub;
-	int tmp;
-	file >> tmp;
-	shrub->month = (G_month)(tmp - 1);
+	string tmp;
+	getline(file, tmp);
+	if (tmp.empty()) { shrub->month = (G_month)(0);  return shrub; }
+	if (!is_number(tmp)) { shrub->month = (G_month)(0);  return shrub; }
+	else { tmp = stoi(tmp); shrub->month = (G_month)(stoi(tmp)); }
+	if (stoi(tmp) < 1 || stoi(tmp) > 12) { shrub->month = (G_month)(0);  return shrub; }
 	return shrub;
 }
 
@@ -43,9 +64,12 @@ void ClearShrub(Plant *plant)
 Flower *InFlower(ifstream &file)
 {
 	Flower *flower = new Flower;
-	int tmp;
-	file >> tmp;
-	flower->type = (G_type)(tmp - 1);
+	string tmp;
+	getline(file, tmp);
+	if (tmp.empty()) { flower->type = (G_type)(0);  return flower; }
+	if (!is_number(tmp)) { flower->type = (G_type)(0);  return flower; }
+	else { tmp = stoi(tmp); flower->type = (G_type)(stoi(tmp)); }
+	if (stoi(tmp) < 1 || stoi(tmp) > 100) { flower->type = (G_type)(0);  return flower; }
 	return flower;
 }
 
@@ -86,7 +110,7 @@ Plant *InPlant(ifstream &file)
 		exit(0);
 	}
 	plant->name = name;
-	plant->habitat = (G_habitat)(tmp_i - 1);
+	plant->habitat = (G_habitat)(tmp_i);
 	plant->consonant = ConsonantCount(name);
 	return plant;
 }

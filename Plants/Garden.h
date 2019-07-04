@@ -19,6 +19,7 @@ enum Type {
 //—писок мес€цов года (в файле дл€ ввода: пор€дковый номер в списке минус 1)
 enum G_month
 {
+	FAIL_M,
 	JANUARY,
 	FEBRUARY,
 	MARCH,
@@ -35,6 +36,7 @@ enum G_month
 
 enum G_habitat
 {
+	FAIL_H,
 	TUNDRA,
 	DESERT,
 	STEPPE,
@@ -45,6 +47,7 @@ enum G_habitat
 //ќбновить при добавлении нового типа
 enum G_type
 {
+	FAIL_T,
 	HOME,
 	GARDEN,
 	WILD
