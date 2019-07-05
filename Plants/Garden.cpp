@@ -5,189 +5,189 @@
 #define max_types 4
 #define max_habitates 4
 
-bool is_number(string s)
+bool is_number( string s )
 {
 	std::string::const_iterator it = s.begin();
-	while (it != s.end() && isdigit(*it)) ++it;
+	while ( it != s.end() && isdigit( *it ) ) { ++it; }
 	return !s.empty() && it == s.end();
 }
 
-bool is_good_string(string s)
+bool is_good_string( string s )
 {
 	std::string::const_iterator it = s.begin();
-	while (it != s.end() && isdigit(*it)) ++it;
-	return !s.empty() && it == s.end() && !(*it == ' ');
+	while ( it != s.end() && isdigit( *it ) ) ++it;
+	return !s.empty() && it == s.end() && !( *it == ' ' );
 }
 
-bool is_empty_file(std::ifstream& pFile)
+bool is_empty_file( std::ifstream& pFile )
 {
 	return pFile.peek() == std::ifstream::traits_type::eof();
 }
 
-Tree *InTree(ifstream &file)
+Tree *InTree( ifstream &file )
 {
 	Tree *tree = new Tree;
 	string tmp;
-	getline(file, tmp);
-	if (tmp.empty()) { tree->age = -1;  return tree; }
-	if (!is_number(tmp)) { tree->age = -2; return tree; }
-	else { tree->age = stoi(tmp); }
-	if (tree->age < 0 || tree->age > 3000) { tree->age = -3; return tree; }
+	getline( file, tmp );
+	if ( tmp.empty() ) { tree->age = -1;  return tree; }
+	if ( !is_number( tmp ) ) { tree->age = -2; return tree; }
+	else { tree->age = stoi( tmp ); }
+	if ( tree->age < 0 || tree->age > 3000 ) { tree->age = -3; return tree; }
 
 	return tree;
 }
 
-void OutTree(Plant *plant, ofstream &file)
+void OutTree( Plant *plant, ofstream &file )
 {
-	file << "Возраст: " << ((Tree *)plant)->age << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
+	file << "Р’РѕР·СЂР°СЃС‚: " << ( ( Tree * ) plant )->age << ". " << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРіР»Р°СЃРЅС‹С… Р±СѓРєРІ = " << plant->consonant << "." << endl;
 }
 
-void ClearTree(Plant *plant)
+void ClearTree( Plant *plant )
 {
-	delete((Tree *)plant);
+	delete( ( Tree * ) plant );
 }
 
-Shrub *InShrub(ifstream &file)
+Shrub *InShrub( ifstream &file )
 {
 	Shrub *shrub = new Shrub;
 	string tmp;
 	int month;
-	getline(file, tmp);
-	if (tmp.empty()) { shrub->month = (G_month)(0);  return shrub; }
-	if (!is_number(tmp)) { shrub->month = (G_month)(0);  return shrub; }
-	else { month = stoi(tmp); shrub->month = (G_month)(stoi(tmp)); }
-	if (stoi(tmp) < 1 || stoi(tmp) > 12) { shrub->month = (G_month)(0);  return shrub; }
+	getline( file, tmp );
+	if ( tmp.empty() ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
+	if ( !is_number( tmp ) ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
+	else { month = stoi( tmp ); shrub->month = ( G_month ) ( stoi( tmp ) ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > 12 ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
 	return shrub;
 }
 
-void OutShrub(Plant *plant, ofstream &file)
+void OutShrub( Plant *plant, ofstream &file )
 {
-	file << "Месяц цветения: ";
-	string months[] = {"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
-	file << months[((Shrub*)plant)->month] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
+	file << "РњРµСЃСЏС† С†РІРµС‚РµРЅРёСЏ: ";
+	string months[] = { "РЇРЅРІР°СЂСЊ","Р¤РµРІСЂР°Р»СЊ","РњР°СЂС‚","РђРїСЂРµР»СЊ","РњР°Р№","РСЋРЅСЊ","РСЋР»СЊ","РђРІРіСѓСЃС‚","РЎРµРЅС‚СЏР±СЂСЊ","РћРєС‚СЏР±СЂСЊ","РќРѕСЏР±СЂСЊ","Р”РµРєР°Р±СЂСЊ" };
+	file << months [( ( Shrub* ) plant )->month] << ". " << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРіР»Р°СЃРЅС‹С… Р±СѓРєРІ = " << plant->consonant << "." << endl;
 }
 
-void ClearShrub(Plant *plant)
+void ClearShrub( Plant *plant )
 {
-	delete((Shrub *)plant);
+	delete( ( Shrub * ) plant );
 }
 
-Flower *InFlower(ifstream &file)
+Flower *InFlower( ifstream &file )
 {
 	Flower *flower = new Flower;
 	string tmp;
 	int type;
-	getline(file, tmp);
-	if (tmp.empty()) { flower->type = (G_type)(0);  return flower; }
-	if (!is_number(tmp)) { flower->type = (G_type)(0);  return flower; }
-	else { type = stoi(tmp); flower->type = (G_type)(stoi(tmp)); }
-	if (stoi(tmp) < 1 || stoi(tmp) > 100) { flower->type = (G_type)(0);  return flower; }
+	getline( file, tmp );
+	if ( tmp.empty() ) { flower->type = ( G_type ) ( 0 );  return flower; }
+	if ( !is_number( tmp ) ) { flower->type = ( G_type ) ( 0 );  return flower; }
+	else { type = stoi( tmp ); flower->type = ( G_type ) ( stoi( tmp ) ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > 100 ) { flower->type = ( G_type ) ( 0 );  return flower; }
 	return flower;
 }
 
-void OutFlower(Plant *plant, ofstream &file)
+void OutFlower( Plant *plant, ofstream &file )
 {
-	string types[] = { "Домашние", "Садовые", "Дикие" };
-	file << "Тип растения: " << types[((Flower*)plant)->type] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
+	string types[] = { "Р”РѕРјР°С€РЅРёРµ", "РЎР°РґРѕРІС‹Рµ", "Р”РёРєРёРµ" };
+	file << "РўРёРї СЂР°СЃС‚РµРЅРёСЏ: " << types [( ( Flower* ) plant )->type] << ". " << "РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРѕРіР»Р°СЃРЅС‹С… Р±СѓРєРІ = " << plant->consonant << "." << endl;
 }
 
-Plant *InPlant(ifstream &file)
+Plant *InPlant( ifstream &file )
 {
 	Plant *plant = new Plant;
 	int type;
 	int habitate;
 	string name;
 	string tmp;
-	//Ввод типа
-	getline(file,tmp);
-	if (tmp.empty() || tmp[0] == ' ' || tmp[0] == '\t') { return NULL; }
-	if (!is_number(tmp)) { return NULL; }
-	else { type = stoi(tmp); }
-	if (stoi(tmp) < 1 || stoi(tmp) > max_types) { return NULL; }
-	//Ввод имени
-	getline(file, tmp);
-	if (tmp.empty()) { return NULL; }
-	if (is_number(tmp) && is_good_string(tmp)) { return NULL; }
+	//Р’РІРѕРґ С‚РёРїР°
+	getline( file, tmp );
+	if ( tmp.empty() || tmp [0] == ' ' || tmp [0] == '\t' ) { return NULL; }
+	if ( !is_number( tmp ) ) { return NULL; }
+	else { type = stoi( tmp ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > max_types ) { return NULL; }
+	//Р’РІРѕРґ РёРјРµРЅРё
+	getline( file, tmp );
+	if ( tmp.empty() ) { return NULL; }
+	if ( is_number( tmp ) && is_good_string( tmp ) ) { return NULL; }
 	else { name = tmp; }
-	if (tmp.length() > 20) { return NULL; }
-	//Ввод места обитания
-	getline(file, tmp);
-	if (tmp.empty()) { return NULL; }
-	if (!is_number(tmp)) { return NULL; }
-	else { habitate = stoi(tmp); }
-	if (stoi(tmp) < 1 || stoi(tmp) > max_habitates) { return NULL; }
-	switch (type)
+	if ( tmp.length() > 20 ) { return NULL; }
+	//Р’РІРѕРґ РјРµСЃС‚Р° РѕР±РёС‚Р°РЅРёСЏ
+	getline( file, tmp );
+	if ( tmp.empty() ) { return NULL; }
+	if ( !is_number( tmp ) ) { return NULL; }
+	else { habitate = stoi( tmp ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > max_habitates ) { return NULL; }
+	switch ( type )
 	{
-	case 1:
-		//ввод дерева
-		plant = (Plant*)InTree(file);
-		if (((Tree*)plant)->age == -1 || ((Tree*)plant)->age == -2)
-		{
-			cout << "Ошибка в вводе возраста дерева" << endl;
-			return NULL;
-		}
-		plant->key = TREE;
-		break;
-	case 2:
-		//ввод куста
-		plant = (Plant*)InShrub(file);
-		if (((Shrub*)plant)->month == 0)
-		{
-			cout << "Ошибка в вводе месяца" << endl;
-			return NULL;
-		}
-		plant->key = SHRUB;
-		break;
-	case 3:
-		//ввод цветка
-		plant = (Plant*)InFlower(file);
-		if (((Flower*)plant)->type == 0)
-		{
-			cout << "Ошибка в вводе типа цветка" << endl;
-			return NULL;
-		}
-		plant->key = FLOWER;
-		break;
-	default:
-		cout << "Ошибка: некоректно введены данные в файл";
-		exit(0);
+		case 1:
+			//РІРІРѕРґ РґРµСЂРµРІР°
+			plant = ( Plant* ) InTree( file );
+			if ( ( ( Tree* ) plant )->age == -1 || ( ( Tree* ) plant )->age == -2 )
+			{
+				cout << "РћС€РёР±РєР° РІ РІРІРѕРґРµ РІРѕР·СЂР°СЃС‚Р° РґРµСЂРµРІР°" << endl;
+				return NULL;
+			}
+			plant->key = TREE;
+			break;
+		case 2:
+			//РІРІРѕРґ РєСѓСЃС‚Р°
+			plant = ( Plant* ) InShrub( file );
+			if ( ( ( Shrub* ) plant )->month == 0 )
+			{
+				cout << "РћС€РёР±РєР° РІ РІРІРѕРґРµ РјРµСЃСЏС†Р°" << endl;
+				return NULL;
+			}
+			plant->key = SHRUB;
+			break;
+		case 3:
+			//РІРІРѕРґ С†РІРµС‚РєР°
+			plant = ( Plant* ) InFlower( file );
+			if ( ( ( Flower* ) plant )->type == 0 )
+			{
+				cout << "РћС€РёР±РєР° РІ РІРІРѕРґРµ С‚РёРїР° С†РІРµС‚РєР°" << endl;
+				return NULL;
+			}
+			plant->key = FLOWER;
+			break;
+		default:
+			cout << "РћС€РёР±РєР°: РЅРµРєРѕСЂРµРєС‚РЅРѕ РІРІРµРґРµРЅС‹ РґР°РЅРЅС‹Рµ РІ С„Р°Р№Р»";
+			exit( 0 );
 	}
 	plant->name = name;
-	plant->habitat = (G_habitat)(habitate);
-	plant->consonant = ConsonantCount(name);
+	plant->habitat = ( G_habitat ) ( habitate );
+	plant->consonant = ConsonantCount( name );
 	return plant;
 }
 
-//Функция вывода объекта. Сначало опредиляется тип объекта, а потом вызывается соответствующая функция.
-//Необходимо обновить список типов, а также их проверку при добавлении нового объекта.
-void OutPlant(Plant *plant, ofstream &file)
+//Р¤СѓРЅРєС†РёСЏ РІС‹РІРѕРґР° РѕР±СЉРµРєС‚Р°. РЎРЅР°С‡Р°Р»Рѕ РѕРїСЂРµРґРёР»СЏРµС‚СЃСЏ С‚РёРї РѕР±СЉРµРєС‚Р°, Р° РїРѕС‚РѕРј РІС‹Р·С‹РІР°РµС‚СЃСЏ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰Р°СЏ С„СѓРЅРєС†РёСЏ.
+//РќРµРѕР±С…РѕРґРёРјРѕ РѕР±РЅРѕРІРёС‚СЊ СЃРїРёСЃРѕРє С‚РёРїРѕРІ, Р° С‚Р°РєР¶Рµ РёС… РїСЂРѕРІРµСЂРєСѓ РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р°.
+void OutPlant( Plant *plant, ofstream &file )
 {
-	string habitat_a[] = { "Тундра", "Пустыня", "Степь", "Сибирь" };
-	string type[] = { "дерево","куст","цветок" };
-	file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
-	file << "Место обитания: " << habitat_a[plant->habitat] << ". ";
-	switch (plant->key)
+	string habitat_a[] = { "РўСѓРЅРґСЂР°", "РџСѓСЃС‚С‹РЅСЏ", "РЎС‚РµРїСЊ", "РЎРёР±РёСЂСЊ" };
+	string type[] = { "РґРµСЂРµРІРѕ","РєСѓСЃС‚","С†РІРµС‚РѕРє" };
+	file << "РћР±СЉРµРєС‚ С‚РёРїР°: " << type [plant->key] << ". РќР°Р·РІР°РЅРёРµ: " << plant->name << ". ";
+	file << "РњРµСЃС‚Рѕ РѕР±РёС‚Р°РЅРёСЏ: " << habitat_a [plant->habitat] << ". ";
+	switch ( plant->key )
 	{
-	case TREE:
-		OutTree(plant, file);
-		break;
-	case SHRUB:
-		OutShrub(plant, file);
-		break;
-	case FLOWER:
-		OutFlower(plant, file);
-		break;
+		case TREE:
+			OutTree( plant, file );
+			break;
+		case SHRUB:
+			OutShrub( plant, file );
+			break;
+		case FLOWER:
+			OutFlower( plant, file );
+			break;
 	}
 
 }
 
-int ConsonantCount(string &name)
+int ConsonantCount( string &name )
 {
 	int consonant = 0;
-	string alphabet_consonant("БВГДЖЗКЛМНПРСТФХЦЧШЩбвгджзклмнпрстфхцчшщ");
-	for (unsigned int i = 0; i < name.length(); i++)
+	string alphabet_consonant( "Р‘Р’Р“Р”Р–Р—РљР›РњРќРџР РЎРўР¤РҐР¦Р§РЁР©Р±РІРіРґР¶Р·РєР»РјРЅРїСЂСЃС‚С„С…С†С‡С€С‰" );
+	for ( unsigned int i = 0; i < name.length(); i++ )
 	{
-		if (alphabet_consonant.find(name[i]) != string::npos)
+		if ( alphabet_consonant.find( name [i] ) != string::npos )
 		{
 			consonant++;
 		}
@@ -196,39 +196,39 @@ int ConsonantCount(string &name)
 	return consonant;
 }
 
-void OutFiltered(Plant *plant, ofstream &file)
+void OutFiltered( Plant *plant, ofstream &file )
 {
-	string type[] = { "дерево","куст" };
-	switch (plant->key)
+	string type[] = { "РґРµСЂРµРІРѕ","РєСѓСЃС‚" };
+	switch ( plant->key )
 	{
-	case TREE:
-		file << "Объект типа: " << type[plant->key] << ". Название: " << plant->name << ". ";
-		OutTree(plant, file);
-		break;
+		case TREE:
+			file << "РћР±СЉРµРєС‚ С‚РёРїР°: " << type [plant->key] << ". РќР°Р·РІР°РЅРёРµ: " << plant->name << ". ";
+			OutTree( plant, file );
+			break;
 	}
 
 }
 
-void ClearPlant(Plant *plant)
+void ClearPlant( Plant *plant )
 {
-	switch (plant->key)
+	switch ( plant->key )
 	{
-	case TREE:
-		ClearTree(plant);
-		break;
-	case SHRUB:
-		ClearShrub(plant);
-		break;
+		case TREE:
+			ClearTree( plant );
+			break;
+		case SHRUB:
+			ClearShrub( plant );
+			break;
 	}
 }
 
-Node *InNode(ifstream &file)
+Node *InNode( ifstream &file )
 {
 	Node *node = new Node;;
 	Plant *plant;
 
-	plant = InPlant(file);
-	if (plant == NULL)
+	plant = InPlant( file );
+	if ( plant == NULL )
 	{
 		return NULL;
 	}
@@ -236,43 +236,43 @@ Node *InNode(ifstream &file)
 	return node;
 }
 
-void OutNode(Node *node, ofstream &file)
+void OutNode( Node *node, ofstream &file )
 {
-	OutPlant(node->cur, file);
+	OutPlant( node->cur, file );
 }
 
-void OutFiltered(Node *node, ofstream &file)
+void OutFiltered( Node *node, ofstream &file )
 {
-	OutFiltered(node->cur, file);
+	OutFiltered( node->cur, file );
 }
 
-void ClearNode(Node *node)
+void ClearNode( Node *node )
 {
-	ClearPlant(node->cur);
+	ClearPlant( node->cur );
 }
 
-void InitContainer(Container *container)
+void InitContainer( Container *container )
 {
 	container->amount = 0;
 	container->first = NULL;
 	container->last = NULL;
 }
 
-void InContainer(Container *container, ifstream &file)
+void InContainer( Container *container, ifstream &file )
 {
 	Node *node;
-	for (; !file.eof(); )
+	for ( ; !file.eof(); )
 	{
 		container->amount++;
 
 		node = new Node;
-		node = InNode(file);
-		if (node == NULL)
+		node = InNode( file );
+		if ( node == NULL )
 		{
-			cout << "Либо все данные были получены, либо в файле присутствует ошибка" << endl;
+			cout << "Р›РёР±Рѕ РІСЃРµ РґР°РЅРЅС‹Рµ Р±С‹Р»Рё РїРѕР»СѓС‡РµРЅС‹, Р»РёР±Рѕ РІ С„Р°Р№Р»Рµ РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚ РѕС€РёР±РєР°" << endl;
 			return;
 		}
-		if (container->first == NULL)
+		if ( container->first == NULL )
 		{
 			container->first = node;
 			container->last = node;
@@ -284,70 +284,70 @@ void InContainer(Container *container, ifstream &file)
 		container->first->prev = node;
 		container->last = node;
 
-		if (container->amount == container->max_amount)
+		if ( container->amount == container->max_amount )
 		{
-			cout << "Ошибка: достигнут максимальное количество элементов." << endl;
-			cout << "Программа продолжит выполнение с текущим содержимым." << endl;
+			cout << "РћС€РёР±РєР°: РґРѕСЃС‚РёРіРЅСѓС‚ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ." << endl;
+			cout << "РџСЂРѕРіСЂР°РјРјР° РїСЂРѕРґРѕР»Р¶РёС‚ РІС‹РїРѕР»РЅРµРЅРёРµ СЃ С‚РµРєСѓС‰РёРј СЃРѕРґРµСЂР¶РёРјС‹Рј." << endl;
 			return;
 		}
 	}
 }
 
-void OutContainer(Container *container, ofstream &file)
+void OutContainer( Container *container, ofstream &file )
 {
 	Node *node;
-	file << "Количество хранящихся элементов: " << container->amount << endl;
+	file << "РљРѕР»РёС‡РµСЃС‚РІРѕ С…СЂР°РЅСЏС‰РёС…СЃСЏ СЌР»РµРјРµРЅС‚РѕРІ: " << container->amount << endl;
 	node = container->first;
-	for (int i = 0; i < container->amount; i++)
+	for ( int i = 0; i < container->amount; i++ )
 	{
-		OutNode(node, file);
+		OutNode( node, file );
 		node = node->next;
 	}
 	file << endl;
-	Sort(container->first, container->last);
+	Sort( container->first, container->last );
 	node = container->first;
-	for (int i = 0; i < container->amount; i++)
+	for ( int i = 0; i < container->amount; i++ )
 	{
-		OutNode(node, file);
+		OutNode( node, file );
 		node = node->next;
 	}
 	file << endl;
 	node = container->first;
-	for (int i = 0; i < container->amount; i++)
+	for ( int i = 0; i < container->amount; i++ )
 	{
-		OutFiltered(node, file);
+		OutFiltered( node, file );
 		node = node->next;
 	}
 	file << endl;
 }
 
-void Sort(Node* &first, Node* &last)
+void Sort( Node* &first, Node* &last )
 {
 	Node *node_cur = first->next;
 	Node *tmp;
 	Node *tmp2;
 
-	for (node_cur = first->next; node_cur != first;)
+	for ( node_cur = first->next; node_cur != first;)
 	{
-		if (node_cur->cur->consonant < node_cur->prev->cur->consonant)
+		if ( node_cur->cur->consonant < node_cur->prev->cur->consonant )
 		{
 			tmp2 = node_cur;
 			node_cur = node_cur->next;
-			if (first->cur->consonant > tmp2->cur->consonant)
+			if ( first->cur->consonant > tmp2->cur->consonant )
 			{
-				Pop(tmp2);
-				Push(first->prev, first, tmp2);
+				Pop( tmp2 );
+				Push( first->prev, first, tmp2 );
 				first = tmp2;
 				last = tmp2->prev;
 			}
 			else
 			{
-				for (tmp = tmp2->prev; tmp != first->prev; tmp = tmp->prev)
+				for ( tmp = tmp2->prev; tmp != first->prev; tmp = tmp->prev )
 				{
-					if ((tmp->cur->consonant > tmp2->cur->consonant) && (tmp->prev->cur->consonant <= tmp2->cur->consonant))
+					if ( ( tmp->cur->consonant > tmp2->cur->consonant ) && ( tmp->prev->cur->consonant <= tmp2->cur->consonant ) )
 					{
-						Pop(tmp2);
-						Push(tmp->prev, tmp, tmp2);
+						Pop( tmp2 );
+						Push( tmp->prev, tmp, tmp2 );
 						break;
 					}
 				}
@@ -360,14 +360,14 @@ void Sort(Node* &first, Node* &last)
 	}
 }
 
-void Pop(Node *node)
+void Pop( Node *node )
 {
 	node->prev->next = node->next;
 	node->next->prev = node->prev;
 }
 
-//Вставляем node 3 межлу node1 и node2
-void Push(Node *node1, Node *node2, Node *node3)
+//Р’СЃС‚Р°РІР»СЏРµРј node 3 РјРµР¶Р»Сѓ node1 Рё node2
+void Push( Node *node1, Node *node2, Node *node3 )
 {
 	node1->next = node3;
 	node2->prev = node3;
@@ -375,7 +375,7 @@ void Push(Node *node1, Node *node2, Node *node3)
 	node3->next = node2;
 }
 
-void Swap(Node *node1, Node *node2)
+void Swap( Node *node1, Node *node2 )
 {
 	Node *new_node = new Node;
 
@@ -384,21 +384,24 @@ void Swap(Node *node1, Node *node2)
 	node2->cur = new_node->cur;
 }
 
-void ClearContainer(Container *container)
+void ClearContainer( Container *container )
 {
 	Node *node;
 	node = container->first;
-	for (int i = 0; i < container->amount; i++)
+	for ( int i = 0; i < container->amount; i++ )
 	{
-		ClearNode(node);
-		if (i + 1 != container->amount)
+		ClearNode( node );
+		if ( i + 1 != container->amount )
 		{
 			node = node->next;
-			delete(node->prev);
+			delete( node->prev );
 		}
 		else
 		{
-			delete(node);
+			delete( node );
 		}
 	}
 }
+
+
+

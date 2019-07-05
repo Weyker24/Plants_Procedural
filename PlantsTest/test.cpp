@@ -16,14 +16,11 @@ struct MyClassCombo : public testing::Test {
 	Tree *tree;
 	Shrub *shrub;
 	Flower *flower;
-	Plant *plant;
 	ifstream file_i;
-	void SetUp() 
-	{ 
+	void SetUp() { 
 		tree = new Tree; 
 		shrub = new Shrub;
 		flower = new Flower;
-		Plant *plant;
 	}
 	void Erase() { delete tree; delete shrub; delete flower;}
 
@@ -115,7 +112,7 @@ TEST_F(MyClassCombo, WrongPlantInTest)
 {
 	file_i.open("Test1_empty.txt");
 	Plant *res = InPlant(file_i);
-	ASSERT_EQ(NULL, res);
+	EXPECT_FALSE(res);
 	file_i.close();
 }
 
@@ -123,7 +120,7 @@ TEST_F(MyClassCombo, WrongPlantInTest2)
 {
 	file_i.open("Test6_empty.txt");
 	Plant *res = InPlant(file_i);
-	ASSERT_EQ(NULL, res);
+	EXPECT_FALSE(res);
 	file_i.close();
 }
 /*int main(int argc, char** argv)
