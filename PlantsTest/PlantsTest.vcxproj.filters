@@ -26,5 +26,17 @@
     <Text Include="..\x64\Debug\Test2_Wrong_Format.txt">
       <Filter>Файл ресурсов</Filter>
     </Text>
+    <Text Include="..\x64\Debug\Test3_Wrong_Format.txt">
+      <Filter>Файл ресурсов</Filter>
+    </Text>
+    <Text Include="..\x64\Debug\Test4_Wrong_Format.txt">
+      <Filter>Файл ресурсов</Filter>
+    </Text>
+    <Text Include="..\x64\Debug\Test5_Wrong_Format.txt">
+      <Filter>Файл ресурсов</Filter>
+    </Text>
+    <Text Include="..\x64\Debug\Test6_Wrong_Format.txt">
+      <Filter>Файл ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

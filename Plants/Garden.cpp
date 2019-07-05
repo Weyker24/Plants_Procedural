@@ -2,11 +2,21 @@
 #include "pch.h"
 #include "garden.h"
 
-bool is_number(const std::string& s)
+#define max_types 4
+#define max_habitates 4
+
+bool is_number(string s)
 {
 	std::string::const_iterator it = s.begin();
 	while (it != s.end() && isdigit(*it)) ++it;
 	return !s.empty() && it == s.end();
+}
+
+bool is_good_string(string s)
+{
+	std::string::const_iterator it = s.begin();
+	while (it != s.end() && isdigit(*it)) ++it;
+	return !s.empty() && it == s.end() && !(*it == ' ');
 }
 
 bool is_empty_file(std::ifstream& pFile)
@@ -22,7 +32,7 @@ Tree *InTree(ifstream &file)
 	if (tmp.empty()) { tree->age = -1;  return tree; }
 	if (!is_number(tmp)) { tree->age = -2; return tree; }
 	else { tree->age = stoi(tmp); }
-	if (tree->age < 0 || tree->age > 3000) { tree->age = -2; return tree; }
+	if (tree->age < 0 || tree->age > 3000) { tree->age = -3; return tree; }
 
 	return tree;
 }
@@ -41,10 +51,11 @@ Shrub *InShrub(ifstream &file)
 {
 	Shrub *shrub = new Shrub;
 	string tmp;
+	int month;
 	getline(file, tmp);
 	if (tmp.empty()) { shrub->month = (G_month)(0);  return shrub; }
 	if (!is_number(tmp)) { shrub->month = (G_month)(0);  return shrub; }
-	else { tmp = stoi(tmp); shrub->month = (G_month)(stoi(tmp)); }
+	else { month = stoi(tmp); shrub->month = (G_month)(stoi(tmp)); }
 	if (stoi(tmp) < 1 || stoi(tmp) > 12) { shrub->month = (G_month)(0);  return shrub; }
 	return shrub;
 }
@@ -65,10 +76,11 @@ Flower *InFlower(ifstream &file)
 {
 	Flower *flower = new Flower;
 	string tmp;
+	int type;
 	getline(file, tmp);
 	if (tmp.empty()) { flower->type = (G_type)(0);  return flower; }
 	if (!is_number(tmp)) { flower->type = (G_type)(0);  return flower; }
-	else { tmp = stoi(tmp); flower->type = (G_type)(stoi(tmp)); }
+	else { type = stoi(tmp); flower->type = (G_type)(stoi(tmp)); }
 	if (stoi(tmp) < 1 || stoi(tmp) > 100) { flower->type = (G_type)(0);  return flower; }
 	return flower;
 }
@@ -83,26 +95,57 @@ Plant *InPlant(ifstream &file)
 {
 	Plant *plant = new Plant;
 	int type;
-	int tmp_i;
+	int habitate;
 	string name;
-	file >> type;
-	file >> name;
-	file >> tmp_i;
+	string tmp;
+	//¬вод типа
+	getline(file,tmp);
+	if (tmp.empty() || tmp[0] == ' ' || tmp[0] == '\t') { return NULL; }
+	if (!is_number(tmp)) { return NULL; }
+	else { type = stoi(tmp); }
+	if (stoi(tmp) < 1 || stoi(tmp) > max_types) { return NULL; }
+	//¬вод имени
+	getline(file, tmp);
+	if (tmp.empty()) { return NULL; }
+	if (is_number(tmp) && is_good_string(tmp)) { return NULL; }
+	else { name = tmp; }
+	if (tmp.length() > 20) { return NULL; }
+	//¬вод места обитани€
+	getline(file, tmp);
+	if (tmp.empty()) { return NULL; }
+	if (!is_number(tmp)) { return NULL; }
+	else { habitate = stoi(tmp); }
+	if (stoi(tmp) < 1 || stoi(tmp) > max_habitates) { return NULL; }
 	switch (type)
 	{
 	case 1:
 		//ввод дерева
 		plant = (Plant*)InTree(file);
+		if (((Tree*)plant)->age == -1 || ((Tree*)plant)->age == -2)
+		{
+			cout << "ќшибка в вводе возраста дерева" << endl;
+			return NULL;
+		}
 		plant->key = TREE;
 		break;
 	case 2:
 		//ввод куста
 		plant = (Plant*)InShrub(file);
+		if (((Shrub*)plant)->month == 0)
+		{
+			cout << "ќшибка в вводе мес€ца" << endl;
+			return NULL;
+		}
 		plant->key = SHRUB;
 		break;
 	case 3:
 		//ввод цветка
 		plant = (Plant*)InFlower(file);
+		if (((Flower*)plant)->type == 0)
+		{
+			cout << "ќшибка в вводе типа цветка" << endl;
+			return NULL;
+		}
 		plant->key = FLOWER;
 		break;
 	default:
@@ -110,7 +153,7 @@ Plant *InPlant(ifstream &file)
 		exit(0);
 	}
 	plant->name = name;
-	plant->habitat = (G_habitat)(tmp_i);
+	plant->habitat = (G_habitat)(habitate);
 	plant->consonant = ConsonantCount(name);
 	return plant;
 }
@@ -185,7 +228,10 @@ Node *InNode(ifstream &file)
 	Plant *plant;
 
 	plant = InPlant(file);
-
+	if (plant == NULL)
+	{
+		return NULL;
+	}
 	node->cur = plant;
 	return node;
 }
@@ -221,7 +267,11 @@ void InContainer(Container *container, ifstream &file)
 
 		node = new Node;
 		node = InNode(file);
-
+		if (node == NULL)
+		{
+			cout << "Ћибо все данные были получены, либо в файле присутствует ошибка" << endl;
+			return;
+		}
 		if (container->first == NULL)
 		{
 			container->first = node;

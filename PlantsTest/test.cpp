@@ -16,12 +16,14 @@ struct MyClassCombo : public testing::Test {
 	Tree *tree;
 	Shrub *shrub;
 	Flower *flower;
+	Plant *plant;
 	ifstream file_i;
 	void SetUp() 
 	{ 
 		tree = new Tree; 
 		shrub = new Shrub;
 		flower = new Flower;
+		Plant *plant;
 	}
 	void Erase() { delete tree; delete shrub; delete flower;}
 
@@ -65,11 +67,63 @@ TEST_F(MyClassCombo, WrongFileFormatTest)
 {
 	file_i.open("Test2_Wrong_Format.txt");
 	tree = InTree(file_i);
+	ASSERT_EQ(-3, tree->age);
+	shrub = InShrub(file_i);
+	ASSERT_EQ(0, shrub->month);
+	flower = InFlower(file_i);
+	ASSERT_EQ(0, flower->type);
+	file_i.close();
+}
+
+TEST_F(MyClassCombo, WrongFileFormatTest2)
+{
+	file_i.open("Test3_Wrong_Format.txt");
+	tree = InTree(file_i);
+	ASSERT_EQ(0, tree->age);
+	shrub = InShrub(file_i);
+	ASSERT_EQ(0, shrub->month);
+	flower = InFlower(file_i);
+	ASSERT_EQ(0, flower->type);
+	file_i.close();
+}
+
+TEST_F(MyClassCombo, WrongFileFormatTest3)
+{
+	file_i.open("Test4_Wrong_Format.txt");
+	tree = InTree(file_i);
 	ASSERT_EQ(-2, tree->age);
 	shrub = InShrub(file_i);
 	ASSERT_EQ(0, shrub->month);
 	flower = InFlower(file_i);
 	ASSERT_EQ(0, flower->type);
+	file_i.close();
+}
+
+TEST_F(MyClassCombo, WrongFileFormatTest4)
+{
+	file_i.open("Test5_Wrong_Format.txt");
+	tree = InTree(file_i);
+	ASSERT_EQ(-2, tree->age);
+	shrub = InShrub(file_i);
+	ASSERT_EQ(0, shrub->month);
+	flower = InFlower(file_i);
+	ASSERT_EQ(0, flower->type);
+	file_i.close();
+}
+
+TEST_F(MyClassCombo, WrongPlantInTest)
+{
+	file_i.open("Test1_empty.txt");
+	Plant *res = InPlant(file_i);
+	ASSERT_EQ(NULL, res);
+	file_i.close();
+}
+
+TEST_F(MyClassCombo, WrongPlantInTest2)
+{
+	file_i.open("Test6_empty.txt");
+	Plant *res = InPlant(file_i);
+	ASSERT_EQ(NULL, res);
 	file_i.close();
 }
 /*int main(int argc, char** argv)

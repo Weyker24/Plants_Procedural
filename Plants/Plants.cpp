@@ -48,6 +48,11 @@ int main(int argc, char* argv[])
 
 	//Вводим данные.
 	InContainer(container, file_i);
+	if (container->first == NULL)
+	{
+		cout << "В файле были допущена ошибка" << endl;
+		exit(0);
+	}
 	OutContainer(container, file_o);
 
 	file_i.close();
