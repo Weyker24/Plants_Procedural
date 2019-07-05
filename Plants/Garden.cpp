@@ -2,13 +2,10 @@
 #include "pch.h"
 #include "garden.h"
 
-#define max_types 4
-#define max_habitates 4
-
 bool is_number( string s )
 {
 	std::string::const_iterator it = s.begin();
-	while ( it != s.end() && isdigit( *it ) ) { ++it; }
+	while ( it != s.end() && isdigit( (unsigned char)*it ) ) { ++it; }
 	return !s.empty() && it == s.end();
 }
 
@@ -101,7 +98,7 @@ Plant *InPlant( ifstream &file )
 	//Ввод типа
 	getline( file, tmp );
 	if ( tmp.empty() || tmp [0] == ' ' || tmp [0] == '\t' ) { return NULL; }
-	if ( !is_number( tmp ) ) { return NULL; }
+	if ( !is_number( tmp ) ) {return NULL; }
 	else { type = stoi( tmp ); }
 	if ( stoi( tmp ) < 1 || stoi( tmp ) > max_types ) { return NULL; }
 	//Ввод имени
@@ -149,7 +146,7 @@ Plant *InPlant( ifstream &file )
 			plant->key = FLOWER;
 			break;
 		default:
-			cout << "Ошибка: некоректно введены данные в файл";
+			cout << "Error, wrong file format" << endl;
 			exit( 0 );
 	}
 	plant->name = name;
@@ -269,7 +266,7 @@ void InContainer( Container *container, ifstream &file )
 		node = InNode( file );
 		if ( node == NULL )
 		{
-			cout << "Либо все данные были получены, либо в файле присутствует ошибка" << endl;
+			cout << "It seems like the file has an error in it" << endl;
 			return;
 		}
 		if ( container->first == NULL )

@@ -34,10 +34,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="input.txt">
+    <Text Include="output.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
-    <Text Include="output.txt">
+    <Text Include="input.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿// Plants.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+// Plants.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
 #include "pch.h"
@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	InContainer(container, file_i);
 	if (container->first == NULL)
 	{
-		cout << "В файле были допущена ошибка" << endl;
+		cout << "The file has wrong format" << endl;
 		exit(0);
 	}
 	OutContainer(container, file_o);
