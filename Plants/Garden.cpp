@@ -29,7 +29,7 @@ Tree *InTree( ifstream &file )
 	if ( tmp.empty() ) { tree->age = -1;  return tree; }
 	if ( !is_number( tmp ) ) { tree->age = -2; return tree; }
 	else { tree->age = stoi( tmp ); }
-	if ( tree->age < 0 || tree->age > 3000 ) { tree->age = -3; return tree; }
+	if ( tree->age < 0 || tree->age > MAX_TREE_LIFE ) { tree->age = -3; return tree; }
 
 	return tree;
 }
@@ -50,10 +50,10 @@ Shrub *InShrub( ifstream &file )
 	string tmp;
 	int month;
 	getline( file, tmp );
-	if ( tmp.empty() ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
-	if ( !is_number( tmp ) ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
-	else { month = stoi( tmp ); shrub->month = ( G_month ) ( stoi( tmp ) ); }
-	if ( stoi( tmp ) < 1 || stoi( tmp ) > 12 ) { shrub->month = ( G_month ) ( 0 );  return shrub; }
+	if ( tmp.empty() ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
+	if ( !is_number( tmp ) ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
+	else { month = stoi( tmp ); shrub->month = ( GenMonth ) ( stoi( tmp ) ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > 12 ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
 	return shrub;
 }
 
@@ -75,10 +75,10 @@ Flower *InFlower( ifstream &file )
 	string tmp;
 	int type;
 	getline( file, tmp );
-	if ( tmp.empty() ) { flower->type = ( G_type ) ( 0 );  return flower; }
-	if ( !is_number( tmp ) ) { flower->type = ( G_type ) ( 0 );  return flower; }
-	else { type = stoi( tmp ); flower->type = ( G_type ) ( stoi( tmp ) ); }
-	if ( stoi( tmp ) < 1 || stoi( tmp ) > 100 ) { flower->type = ( G_type ) ( 0 );  return flower; }
+	if ( tmp.empty() ) { flower->type = ( GenType ) ( 0 );  return flower; }
+	if ( !is_number( tmp ) ) { flower->type = ( GenType ) ( 0 );  return flower; }
+	else { type = stoi( tmp ); flower->type = ( GenType ) ( stoi( tmp ) ); }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > 100 ) { flower->type = ( GenType ) ( 0 );  return flower; }
 	return flower;
 }
 
@@ -100,7 +100,7 @@ Plant *InPlant( ifstream &file )
 	if ( tmp.empty() || tmp [0] == ' ' || tmp [0] == '\t' ) { return NULL; }
 	if ( !is_number( tmp ) ) {return NULL; }
 	else { type = stoi( tmp ); }
-	if ( stoi( tmp ) < 1 || stoi( tmp ) > max_types ) { return NULL; }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > MAX_TYPES ) { return NULL; }
 	//Ввод имени
 	getline( file, tmp );
 	if ( tmp.empty() ) { return NULL; }
@@ -112,7 +112,7 @@ Plant *InPlant( ifstream &file )
 	if ( tmp.empty() ) { return NULL; }
 	if ( !is_number( tmp ) ) { return NULL; }
 	else { habitate = stoi( tmp ); }
-	if ( stoi( tmp ) < 1 || stoi( tmp ) > max_habitates ) { return NULL; }
+	if ( stoi( tmp ) < 1 || stoi( tmp ) > MAX_HABITATES ) { return NULL; }
 	switch ( type )
 	{
 		case 1:
@@ -150,7 +150,7 @@ Plant *InPlant( ifstream &file )
 			exit( 0 );
 	}
 	plant->name = name;
-	plant->habitat = ( G_habitat ) ( habitate );
+	plant->habitat = ( GenHabitat ) ( habitate );
 	plant->consonant = ConsonantCount( name );
 	return plant;
 }
