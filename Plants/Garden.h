@@ -78,4 +78,5 @@ void ClearNode(Node *);
 void InitContainer(Container *);
 void InContainer(Container *,ifstream &);
 void OutContainer(Container *, ofstream &);
+void MultiMethod( Container *container, ofstream &file );
 void ClearContainer(Container *);

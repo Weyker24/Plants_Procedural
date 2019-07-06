@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	//ifstream file(s.c_str());
 	//cout << "введите название файла для вывода" << endl;
 	//cin >> s;
-	//ofstream file_o(s.c_str());
+	//fileream file_o(s.c_str());
 
 	ifstream file_i(argv[1]);
 	ofstream file_o(argv[2]);
@@ -48,7 +48,8 @@ int main(int argc, char* argv[])
 
 	//Вводим данные.
 	InContainer(container, file_i);
-	OutContainer(container, file_o);
+	//OutContainer(container, file_o);
+	MultiMethod( container, file_o );
 
 	file_i.close();
 	file_o.close();

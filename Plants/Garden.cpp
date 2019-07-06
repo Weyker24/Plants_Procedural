@@ -35,46 +35,6 @@ void OutShrub(Plant *plant, ofstream &file)
 	file << "Месяц цветения: ";
 	string months[] = {"Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"};
 	file << months[((Shrub*)plant)->month] << "." << endl;
-	/*
-	switch (((Shrub *)plant)->month)
-	{
-	case JANUARY:
-		file << "Январь" << endl;
-		break;
-	case FEBRUARY:
-		file << "Февраль" << endl;
-		break;
-	case MARCH:
-		file << "Март" << endl;
-		break;
-	case APRIL:
-		file << "Апрель" << endl;
-		break;
-	case MAY:
-		file << "Май" << endl;
-		break;
-	case JUNE:
-		file << "Июнь" << endl;
-		break;
-	case JULY:
-		file << "Июль" << endl;
-		break;
-	case AUGUST:
-		file << "Август" << endl;
-		break;
-	case SEPTEMBER:
-		file << "Сентябрь" << endl;
-		break;
-	case OCTOBER:
-		file << "Октябрь" << endl;
-		break;
-	case NOVEMBER:
-		file << "Ноябрь" << endl;
-		break;
-	case DECEMBER:
-		file << "Декабрь" << endl;
-		break;
-	}*/
 }
 
 void ClearShrub(Plant *plant)
@@ -204,6 +164,58 @@ void OutContainer(Container *container, ofstream &file)
 		OutNode(node,file);
 		node = node->next;
 	}
+}
+
+// Мультиметод
+void MultiMethod( Container *container, ofstream &file )
+{
+	Node *first_tmp;
+	Node *second_tmp;
+	first_tmp = container->first;
+	file << "Мультиметод." << endl;
+	for ( int i = 0; i < container->amount; i++ )
+	{
+		second_tmp = first_tmp->next;
+		for ( int j = i + 1; j < container->amount; j++ )
+		{
+			switch ( first_tmp->cur->key )
+			{
+				case TREE:
+				switch ( second_tmp->cur->key )
+				{
+					case TREE:
+						file << "Два дерева." << endl;
+						break;
+					case SHRUB:
+						file << "Дерево и куст." << endl;
+						break;
+					default:
+						file << "Неизвестный тип." << endl;
+				}
+				break;
+				case SHRUB:
+				switch ( second_tmp->cur->key )
+				{
+					case TREE:
+						file << "Куст и дерево." << endl;
+						break;
+					case SHRUB:
+						file << "Два куста." << endl;
+						break;
+					default:
+						file << "Неизвестный тип" << endl;
+				}
+				break;
+				default:
+					file << "Неизвестный тип" << endl;
+			}
+			OutNode( first_tmp, file );
+			OutNode( second_tmp, file );
+			second_tmp = second_tmp->next;
+		}
+		first_tmp = first_tmp->next;
+	}
+
 }
 
 void ClearContainer(Container *container)
