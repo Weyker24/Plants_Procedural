@@ -381,6 +381,58 @@ void Swap( Node *node1, Node *node2 )
 	node2->cur = new_node->cur;
 }
 
+// Мультиметод
+void MultiMethod( Container *container, ofstream &file )
+{
+	Node *first_tmp;
+	Node *second_tmp;
+	first_tmp = container->first;
+	file << "Мультиметод." << endl;
+	for ( int i = 0; i < container->amount; i++ )
+	{
+		second_tmp = first_tmp->next;
+		for ( int j = i + 1; j < container->amount; j++ )
+		{
+			switch ( first_tmp->cur->key )
+			{
+				case TREE:
+				switch ( second_tmp->cur->key )
+				{
+					case TREE:
+						file << "Два дерева." << endl;
+						break;
+					case SHRUB:
+						file << "Дерево и куст." << endl;
+						break;
+					default:
+						file << "Неизвестный тип." << endl;
+				}
+				break;
+				case SHRUB:
+				switch ( second_tmp->cur->key )
+				{
+					case TREE:
+						file << "Куст и дерево." << endl;
+						break;
+					case SHRUB:
+						file << "Два куста." << endl;
+						break;
+					default:
+						file << "Неизвестный тип" << endl;
+				}
+				break;
+				default:
+					file << "Неизвестный тип" << endl;
+			}
+			OutNode( first_tmp, file );
+			OutNode( second_tmp, file );
+			second_tmp = second_tmp->next;
+		}
+		first_tmp = first_tmp->next;
+	}
+
+}
+
 void ClearContainer( Container *container )
 {
 	Node *node;

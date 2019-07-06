@@ -138,3 +138,8 @@ void Sort(Node *&, Node *&); // функция сортировки
 void Pop(Node *); // функция изъятия элемента из контейнера
 void Push(Node *, Node *, Node *); // функция занесения элемента контейнера
 void Swap(Node *, Node *); // функция, которая меняет местами 2 элемента
+void InitContainer(Container *);
+void InContainer(Container *,ifstream &);
+void OutContainer(Container *, ofstream &);
+void MultiMethod( Container *container, ofstream &file );
+void ClearContainer(Container *);
