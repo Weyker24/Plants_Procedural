@@ -2,21 +2,21 @@
 #include "pch.h"
 #include "garden.h"
 
-bool is_number( string s )
+bool IsNumber( string s )
 {
 	std::string::const_iterator it = s.begin();
 	while ( it != s.end() && isdigit( (unsigned char)*it ) ) { ++it; }
 	return !s.empty() && it == s.end();
 }
 
-bool is_good_string( string s )
+bool IsGoodString( string s )
 {
 	std::string::const_iterator it = s.begin();
 	while ( it != s.end() && isdigit( *it ) ) ++it;
 	return !s.empty() && it == s.end() && !( *it == ' ' );
 }
 
-bool is_empty_file( std::ifstream& pFile )
+bool IsEmptyFile( std::ifstream& pFile )
 {
 	return pFile.peek() == std::ifstream::traits_type::eof();
 }
@@ -27,7 +27,7 @@ Tree *InTree( ifstream &file )
 	string tmp;
 	getline( file, tmp );
 	if ( tmp.empty() ) { tree->age = -1;  return tree; }
-	if ( !is_number( tmp ) ) { tree->age = -2; return tree; }
+	if ( !IsNumber( tmp ) ) { tree->age = -2; return tree; }
 	else { tree->age = stoi( tmp ); }
 	if ( tree->age < 0 || tree->age > MAX_TREE_LIFE ) { tree->age = -3; return tree; }
 
@@ -51,7 +51,7 @@ Shrub *InShrub( ifstream &file )
 	int month;
 	getline( file, tmp );
 	if ( tmp.empty() ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
-	if ( !is_number( tmp ) ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
+	if ( !IsNumber( tmp ) ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
 	else { month = stoi( tmp ); shrub->month = ( GenMonth ) ( stoi( tmp ) ); }
 	if ( stoi( tmp ) < 1 || stoi( tmp ) > 12 ) { shrub->month = ( GenMonth ) ( 0 );  return shrub; }
 	return shrub;
@@ -61,7 +61,7 @@ void OutShrub( Plant *plant, ofstream &file )
 {
 	file << "Месяц цветения: ";
 	string months[] = { "Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь" };
-	file << months [( ( Shrub* ) plant )->month] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
+	file << months [( ( Shrub* ) plant )->month - 1] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
 }
 
 void ClearShrub( Plant *plant )
@@ -76,7 +76,7 @@ Flower *InFlower( ifstream &file )
 	int type;
 	getline( file, tmp );
 	if ( tmp.empty() ) { flower->type = ( GenType ) ( 0 );  return flower; }
-	if ( !is_number( tmp ) ) { flower->type = ( GenType ) ( 0 );  return flower; }
+	if ( !IsNumber( tmp ) ) { flower->type = ( GenType ) ( 0 );  return flower; }
 	else { type = stoi( tmp ); flower->type = ( GenType ) ( stoi( tmp ) ); }
 	if ( stoi( tmp ) < 1 || stoi( tmp ) > 100 ) { flower->type = ( GenType ) ( 0 );  return flower; }
 	return flower;
@@ -85,7 +85,7 @@ Flower *InFlower( ifstream &file )
 void OutFlower( Plant *plant, ofstream &file )
 {
 	string types[] = { "Домашние", "Садовые", "Дикие" };
-	file << "Тип растения: " << types [( ( Flower* ) plant )->type] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
+	file << "Тип растения: " << types [( ( Flower* ) plant )->type - 1] << ". " << "Количество согласных букв = " << plant->consonant << "." << endl;
 }
 
 Plant *InPlant( ifstream &file )
@@ -98,19 +98,19 @@ Plant *InPlant( ifstream &file )
 	//Ввод типа
 	getline( file, tmp );
 	if ( tmp.empty() || tmp [0] == ' ' || tmp [0] == '\t' ) { return NULL; }
-	if ( !is_number( tmp ) ) {return NULL; }
+	if ( !IsNumber( tmp ) ) {return NULL; }
 	else { type = stoi( tmp ); }
 	if ( stoi( tmp ) < 1 || stoi( tmp ) > MAX_TYPES ) { return NULL; }
 	//Ввод имени
 	getline( file, tmp );
 	if ( tmp.empty() ) { return NULL; }
-	if ( is_number( tmp ) && is_good_string( tmp ) ) { return NULL; }
+	if ( IsNumber( tmp ) && IsGoodString( tmp ) ) { return NULL; }
 	else { name = tmp; }
 	if ( tmp.length() > 20 ) { return NULL; }
 	//Ввод места обитания
 	getline( file, tmp );
 	if ( tmp.empty() ) { return NULL; }
-	if ( !is_number( tmp ) ) { return NULL; }
+	if ( !IsNumber( tmp ) ) { return NULL; }
 	else { habitate = stoi( tmp ); }
 	if ( stoi( tmp ) < 1 || stoi( tmp ) > MAX_HABITATES ) { return NULL; }
 	switch ( type )
@@ -161,8 +161,8 @@ void OutPlant( Plant *plant, ofstream &file )
 {
 	string habitat_a[] = { "Тундра", "Пустыня", "Степь", "Сибирь" };
 	string type[] = { "дерево","куст","цветок" };
-	file << "Объект типа: " << type [plant->key] << ". Название: " << plant->name << ". ";
-	file << "Место обитания: " << habitat_a [plant->habitat] << ". ";
+	file << "Объект типа: " << type [plant->key - 1] << ". Название: " << plant->name << ". ";
+	file << "Место обитания: " << habitat_a [plant->habitat - 1] << ". ";
 	switch ( plant->key )
 	{
 		case TREE:
@@ -181,7 +181,7 @@ void OutPlant( Plant *plant, ofstream &file )
 int ConsonantCount( string &name )
 {
 	int consonant = 0;
-	string alphabet_consonant( "БВГДЖЗКЛМНПРСТФХЦЧШЩбвгджзклмнпрстфхцчшщ" );
+	string alphabet_consonant( "QWRTPSDFGHJKLZXCVBNMqwrtpsdfghjklzxcvbnm" );
 	for ( unsigned int i = 0; i < name.length(); i++ )
 	{
 		if ( alphabet_consonant.find( name [i] ) != string::npos )
@@ -195,11 +195,11 @@ int ConsonantCount( string &name )
 
 void OutFiltered( Plant *plant, ofstream &file )
 {
-	string type[] = { "дерево","куст" };
+	string type[] = { "дерево","куст","цветок"};
 	switch ( plant->key )
 	{
 		case TREE:
-			file << "Объект типа: " << type [plant->key] << ". Название: " << plant->name << ". ";
+			file << "Объект типа: " << type [plant->key - 1] << ". Название: " << plant->name << ". ";
 			OutTree( plant, file );
 			break;
 	}
@@ -404,6 +404,9 @@ void MultiMethod( Container *container, ofstream &file )
 					case SHRUB:
 						file << "Дерево и куст." << endl;
 						break;
+					case FLOWER:
+						file << "Дерево и цветок." << endl;
+						break;
 					default:
 						file << "Неизвестный тип." << endl;
 				}
@@ -417,10 +420,29 @@ void MultiMethod( Container *container, ofstream &file )
 					case SHRUB:
 						file << "Два куста." << endl;
 						break;
+					case FLOWER:
+						file << "Куст и цветок." << endl;
+						break;
 					default:
 						file << "Неизвестный тип" << endl;
 				}
 				break;
+				case FLOWER:
+					switch ( second_tmp->cur->key )
+					{
+						case TREE:
+							file << "Цветок и дерево." << endl;
+							break;
+						case SHRUB:
+							file << "Цветок и куст" << endl;
+							break;
+						case FLOWER:
+							file << "Два цветка." << endl;
+							break;
+						default:
+							file << "Неизвестный тип" << endl;
+					}
+					break;
 				default:
 					file << "Неизвестный тип" << endl;
 			}

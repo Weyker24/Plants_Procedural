@@ -53,7 +53,6 @@ int main(int argc, char* argv[])
 		cout << "The file has wrong format" << endl;
 		exit(0);
 	}
-	OutContainer(container, file_o);
 	//OutContainer(container, file_o);
 	MultiMethod( container, file_o );
 

@@ -55,7 +55,7 @@ enum GenHabitat
 //Обновить при добавлении нового типа
 enum GenType
 {
-	FAIL_T,
+	FAIL_GEN_T,
 	HOME,
 	GARDEN,
 	WILD
@@ -133,13 +133,10 @@ void ClearNode(Node *); // функция очистки элемента
 void InitContainer(Container *); // функция инициализации контейнера
 void InContainer(Container *, ifstream &); //функциям заполнения контейнера
 void OutContainer(Container *, ofstream &); //функция вывода всего контенера
+void MultiMethod( Container *container, ofstream &file );
 void ClearContainer(Container *); // функция очистки контейнера
+
 void Sort(Node *&, Node *&); // функция сортировки
 void Pop(Node *); // функция изъятия элемента из контейнера
 void Push(Node *, Node *, Node *); // функция занесения элемента контейнера
 void Swap(Node *, Node *); // функция, которая меняет местами 2 элемента
-void InitContainer(Container *);
-void InContainer(Container *,ifstream &);
-void OutContainer(Container *, ofstream &);
-void MultiMethod( Container *container, ofstream &file );
-void ClearContainer(Container *);
